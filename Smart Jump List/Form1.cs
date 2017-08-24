@@ -1,5 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
+using Smart_Jump_List.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,43 +17,89 @@ namespace Smart_Jump_List
     public partial class Form1 : Form
     {
         enum GROUP_STATE { WAIT, ADD, EDIT, REMOVE };
-        enum APP_STATE { WAIT, ADD, EDIT, REMOVE };
+        enum ITEM_STATE { WAIT, ADD, EDIT, REMOVE };
 
-        String DEFAULT_PATH = @"C:\smart_jump_list\data.dat";
+        String DEFAULT_PATH = "D:\\SMART_JUMP_LIST\\data.dat";
         GROUP_STATE CURRENT_GROUP_STATE;
-        APP_STATE CURRENT_APP_STATE;
-        Dictionary<String, Dictionary<String, String>> appList;
+        ITEM_STATE CURRENT_APP_STATE;
+        Dictionary<String, GroupModel> group_dictionary;
+        List<GroupModel> groups;
 
-        void loadAppList()
+        void loadData()
         {
-            if (!File.Exists(DEFAULT_PATH))
+            //System.IO.Directory.CreateDirectory(DEFAULT_PATH);
+            using (System.IO.StreamReader r = File.AppendText(DEFAULT_PATH))
             {
-                File.Create(DEFAULT_PATH).Dispose();
-            }
-            using (System.IO.StreamReader r = new System.IO.StreamReader(DEFAULT_PATH))
-            {
-                string line_data;
-                while ((line_data = r.ReadLine()) != null)
+                string line;
+                while ((line = r.ReadLine()) != null)
                 {
-                    string[] line = line_data.Split(';');
-                    if (line.Length == 3)
+                    string[] line_data = line.Split(';');
+                    if (line.StartsWith("//"))
                     {
-                        // Put group
-                        if (!appList.ContainsKey(line[0]))
+                        for (int i = 0; i < line_data.Length; i++)
                         {
-                            appList.Add(line[0], new Dictionary<string, string>());
-                        }
+                            string[] group_data = line_data[i].Split('-');
+                            GroupModel group = new GroupModel
+                            {
+                                ID = group_data[0],
+                                Name = group_data[1],
+                                Items = new Dictionary<string, ItemModel>()
 
-                       // appList[""].Add(line
-                        
+                            };
+                            groups.Add(group);
+                            group_dictionary.Add(group_data[0], group);
+                        }
                     }
+                    else
+                    {
+                        if (line_data.Length == 4)
+                        {
+                            string groupID = line_data[0];
+                            string itemID = line_data[1];
+                            string itemName = line_data[2];
+                            string itemUrl = line_data[3];
+
+                            ItemModel item = new ItemModel()
+                            {
+                                ID = itemID,
+                                Name = itemName,
+                                Url = itemUrl
+                            };
+                            group_dictionary[groupID].Items.Add(itemID, item);
+                        }
+                    }
+
+                    
+                    
                 }
             }
         }
 
-        void saveAppList()
+        void saveData()
         {
+            System.IO.StreamWriter SaveFile = new System.IO.StreamWriter(DEFAULT_PATH);
 
+            List<string> group_keys = new List<string>(group_dictionary.Keys);
+            var groups = "//" + String.Join(";", group_keys.ToArray());
+            SaveFile.WriteLine(groups);
+            foreach (string groupID in group_keys)
+            {
+                string write_line;
+                GroupModel groupModel= group_dictionary[groupID];
+                List<string> item_keys = new List<string>(groupModel.Items.Keys);
+                foreach (string itemID in item_keys) {
+                    ItemModel item = groupModel.Items[itemID];
+                    write_line = groupID + ";";
+                    write_line += item.ID + ";";
+                    write_line += item.Name + ";";
+                    write_line += item.Url;
+
+                    SaveFile.WriteLine(write_line);
+                }
+            }
+                
+
+            SaveFile.Close();
         }
 
         public Form1()
@@ -61,25 +108,27 @@ namespace Smart_Jump_List
             StartPosition = FormStartPosition.CenterScreen;
 
             CURRENT_GROUP_STATE = GROUP_STATE.WAIT;
-            CURRENT_APP_STATE = APP_STATE.WAIT;
+            CURRENT_APP_STATE = ITEM_STATE.WAIT;
 
-            appList = new Dictionary<string, Dictionary<string, string>>();
+            //appList = new Dictionary<string, Dictionary<string, string>>();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            string str1 = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
-            string str2 = "Chrome";
-            JumpList jl = JumpList.CreateJumpListForIndividualWindow(TaskbarManager.Instance.ApplicationId, this.Handle);
+            //string str1 = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
+            //string str2 = "Chrome";
+            //JumpList jl = JumpList.CreateJumpListForIndividualWindow(TaskbarManager.Instance.ApplicationId, this.Handle);
 
-            JumpListCustomCategory ct1 = new JumpListCustomCategory("Developer Tool");
-            // Add aplication
-                JumpListLink jll = new JumpListLink(str1, str2);
-                jll.IconReference = new IconReference(str1.ToString(), 0);
-                ct1.AddJumpListItems(jll);
-            jl.AddCustomCategories(ct1);
+            //JumpListCustomCategory ct1 = new JumpListCustomCategory("Developer Tool");
+            //// Add aplication
+            //    JumpListLink jll = new JumpListLink(str1, str2);
+            //    jll.IconReference = new IconReference(str1.ToString(), 0);
+            //    ct1.AddJumpListItems(jll);
+            //jl.AddCustomCategories(ct1);
 
-            jl.Refresh();
+            //jl.Refresh();
+
+            loadData();
         }
 
         private void btnGroupAdd_Click(object sender, EventArgs e)
