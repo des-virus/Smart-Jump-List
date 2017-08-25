@@ -27,8 +27,12 @@ namespace Smart_Jump_List
 
         void loadData()
         {
-            //System.IO.Directory.CreateDirectory(DEFAULT_PATH);
-            using (System.IO.StreamReader r = File.AppendText(DEFAULT_PATH))
+            if (!File.Exists(DEFAULT_PATH))
+            {
+                File.Create(DEFAULT_PATH).Dispose();
+                return;
+            }
+            using (System.IO.StreamReader r = new System.IO.StreamReader(DEFAULT_PATH))
             {
                 string line;
                 while ((line = r.ReadLine()) != null)
@@ -78,13 +82,23 @@ namespace Smart_Jump_List
         void saveData()
         {
             System.IO.StreamWriter SaveFile = new System.IO.StreamWriter(DEFAULT_PATH);
-
+            int b = 4;
             List<string> group_keys = new List<string>(group_dictionary.Keys);
-            var groups = "//" + String.Join(";", group_keys.ToArray());
-            SaveFile.WriteLine(groups);
+            int keySize = group_keys.Count;
+            string write_line = "//";
+
+            for (var i = 0; i < group_keys.Count - 1; i++) {
+                write_line += group_keys[i] + "-" + group_dictionary[group_keys[i]].Name + ";";
+            }
+
+            write_line += group_keys[keySize - 1] + "-" + group_dictionary[group_keys[keySize - 1]].Name;
+
+            SaveFile.AutoFlush = true;
+            
+            SaveFile.WriteLine(write_line);
             foreach (string groupID in group_keys)
             {
-                string write_line;
+                
                 GroupModel groupModel= group_dictionary[groupID];
                 List<string> item_keys = new List<string>(groupModel.Items.Keys);
                 foreach (string itemID in item_keys) {
@@ -97,7 +111,6 @@ namespace Smart_Jump_List
                     SaveFile.WriteLine(write_line);
                 }
             }
-                
 
             SaveFile.Close();
         }
@@ -109,6 +122,8 @@ namespace Smart_Jump_List
 
             CURRENT_GROUP_STATE = GROUP_STATE.WAIT;
             CURRENT_APP_STATE = ITEM_STATE.WAIT;
+
+            group_dictionary = new Dictionary<string, GroupModel>();
 
             //appList = new Dictionary<string, Dictionary<string, string>>();
         }
@@ -131,10 +146,34 @@ namespace Smart_Jump_List
             loadData();
         }
 
-        private void btnGroupAdd_Click(object sender, EventArgs e)
-        {
-
+        string  getUnixTime() {
+            Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            return unixTimestamp.ToString();
         }
 
+        private void btnGroupAdd_Click(object sender, EventArgs e)
+        {
+            string ID = getUnixTime();
+            string name = txtGroupName.Text;
+
+            // Add to dictionary
+            GroupModel group = new GroupModel
+            {
+                ID = ID,
+                Name = name,
+                Items = new Dictionary<string, ItemModel>()
+            };
+            group_dictionary.Add(ID, group);
+
+            // Add to dgv
+            var index = dgvGroup.Rows.Add();
+            dgvGroup.Rows[index].Cells[0].Value = ID;
+            dgvGroup.Rows[index].Cells[1].Value = name;
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            saveData();
+        }
     }
 }

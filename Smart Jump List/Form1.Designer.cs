@@ -30,7 +30,6 @@
         {
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnAppReset = new System.Windows.Forms.Button();
             this.btnAppEdit = new System.Windows.Forms.Button();
             this.btnAppRemove = new System.Windows.Forms.Button();
@@ -44,6 +43,7 @@
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnGroupReset = new System.Windows.Forms.Button();
             this.btnGroupEdit = new System.Windows.Forms.Button();
             this.btnGroupDelete = new System.Windows.Forms.Button();
@@ -53,9 +53,10 @@
             this.dgvGroup = new System.Windows.Forms.DataGridView();
             this.order = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApp)).BeginInit();
+            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGroup)).BeginInit();
             this.SuspendLayout();
             // 
@@ -87,22 +88,6 @@
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ứng dụng";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.btnGroupReset);
-            this.groupBox2.Controls.Add(this.btnGroupEdit);
-            this.groupBox2.Controls.Add(this.btnGroupDelete);
-            this.groupBox2.Controls.Add(this.btnGroupAdd);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.txtGroupName);
-            this.groupBox2.Controls.Add(this.dgvGroup);
-            this.groupBox2.Location = new System.Drawing.Point(9, 189);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(573, 536);
-            this.groupBox2.TabIndex = 6;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Nhóm";
             // 
             // btnAppReset
             // 
@@ -211,6 +196,22 @@
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.Width = 356;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.btnGroupReset);
+            this.groupBox2.Controls.Add(this.btnGroupEdit);
+            this.groupBox2.Controls.Add(this.btnGroupDelete);
+            this.groupBox2.Controls.Add(this.btnGroupAdd);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.txtGroupName);
+            this.groupBox2.Controls.Add(this.dgvGroup);
+            this.groupBox2.Location = new System.Drawing.Point(9, 189);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(573, 536);
+            this.groupBox2.TabIndex = 6;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Nhóm";
+            // 
             // btnGroupReset
             // 
             this.btnGroupReset.Location = new System.Drawing.Point(335, 102);
@@ -296,12 +297,13 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.Name = "Form1";
             this.Text = "Smart Jump List";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvApp)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvApp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGroup)).EndInit();
             this.ResumeLayout(false);
 
@@ -333,6 +335,7 @@
         private System.Windows.Forms.DataGridView dgvGroup;
         private System.Windows.Forms.DataGridViewTextBoxColumn order;
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 
