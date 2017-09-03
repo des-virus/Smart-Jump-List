@@ -1,6 +1,6 @@
 ﻿namespace Smart_Jump_List
 {
-    partial class Form1
+    partial class frmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -30,9 +30,10 @@
         {
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnAppReset = new System.Windows.Forms.Button();
+            this.btnAppCancel = new System.Windows.Forms.Button();
+            this.btnAppOk = new System.Windows.Forms.Button();
             this.btnAppEdit = new System.Windows.Forms.Button();
-            this.btnAppRemove = new System.Windows.Forms.Button();
+            this.btnAppDelete = new System.Windows.Forms.Button();
             this.btnAppAdd = new System.Windows.Forms.Button();
             this.btnAppPathChoose = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -40,11 +41,13 @@
             this.txtAppPath = new System.Windows.Forms.TextBox();
             this.txtAppName = new System.Windows.Forms.TextBox();
             this.dgvApp = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.orderApp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.codeApp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameApp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pathApp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnGroupReset = new System.Windows.Forms.Button();
+            this.btnGroupCancel = new System.Windows.Forms.Button();
+            this.btnGroupOk = new System.Windows.Forms.Button();
             this.btnGroupEdit = new System.Windows.Forms.Button();
             this.btnGroupDelete = new System.Windows.Forms.Button();
             this.btnGroupAdd = new System.Windows.Forms.Button();
@@ -52,8 +55,9 @@
             this.txtGroupName = new System.Windows.Forms.TextBox();
             this.dgvGroup = new System.Windows.Forms.DataGridView();
             this.order = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.code = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.btnTest = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApp)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -72,9 +76,10 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btnAppReset);
+            this.groupBox1.Controls.Add(this.btnAppCancel);
+            this.groupBox1.Controls.Add(this.btnAppOk);
             this.groupBox1.Controls.Add(this.btnAppEdit);
-            this.groupBox1.Controls.Add(this.btnAppRemove);
+            this.groupBox1.Controls.Add(this.btnAppDelete);
             this.groupBox1.Controls.Add(this.btnAppAdd);
             this.groupBox1.Controls.Add(this.btnAppPathChoose);
             this.groupBox1.Controls.Add(this.label2);
@@ -89,14 +94,25 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ứng dụng";
             // 
-            // btnAppReset
+            // btnAppCancel
             // 
-            this.btnAppReset.Location = new System.Drawing.Point(331, 127);
-            this.btnAppReset.Name = "btnAppReset";
-            this.btnAppReset.Size = new System.Drawing.Size(80, 30);
-            this.btnAppReset.TabIndex = 14;
-            this.btnAppReset.Text = "Reset";
-            this.btnAppReset.UseVisualStyleBackColor = true;
+            this.btnAppCancel.Location = new System.Drawing.Point(417, 128);
+            this.btnAppCancel.Name = "btnAppCancel";
+            this.btnAppCancel.Size = new System.Drawing.Size(80, 30);
+            this.btnAppCancel.TabIndex = 14;
+            this.btnAppCancel.Text = "Hủy";
+            this.btnAppCancel.UseVisualStyleBackColor = true;
+            this.btnAppCancel.Click += new System.EventHandler(this.btnAppCancel_Click);
+            // 
+            // btnAppOk
+            // 
+            this.btnAppOk.Location = new System.Drawing.Point(331, 127);
+            this.btnAppOk.Name = "btnAppOk";
+            this.btnAppOk.Size = new System.Drawing.Size(80, 30);
+            this.btnAppOk.TabIndex = 14;
+            this.btnAppOk.Text = "Ok";
+            this.btnAppOk.UseVisualStyleBackColor = true;
+            this.btnAppOk.Click += new System.EventHandler(this.btnAppOk_Click);
             // 
             // btnAppEdit
             // 
@@ -106,15 +122,16 @@
             this.btnAppEdit.TabIndex = 10;
             this.btnAppEdit.Text = "Sửa";
             this.btnAppEdit.UseVisualStyleBackColor = true;
+            this.btnAppEdit.Click += new System.EventHandler(this.btnAppEdit_Click);
             // 
-            // btnAppRemove
+            // btnAppDelete
             // 
-            this.btnAppRemove.Location = new System.Drawing.Point(242, 127);
-            this.btnAppRemove.Name = "btnAppRemove";
-            this.btnAppRemove.Size = new System.Drawing.Size(80, 30);
-            this.btnAppRemove.TabIndex = 11;
-            this.btnAppRemove.Text = "Xóa";
-            this.btnAppRemove.UseVisualStyleBackColor = true;
+            this.btnAppDelete.Location = new System.Drawing.Point(242, 127);
+            this.btnAppDelete.Name = "btnAppDelete";
+            this.btnAppDelete.Size = new System.Drawing.Size(80, 30);
+            this.btnAppDelete.TabIndex = 11;
+            this.btnAppDelete.Text = "Xóa";
+            this.btnAppDelete.UseVisualStyleBackColor = true;
             // 
             // btnAppAdd
             // 
@@ -124,6 +141,7 @@
             this.btnAppAdd.TabIndex = 12;
             this.btnAppAdd.Text = "Thêm";
             this.btnAppAdd.UseVisualStyleBackColor = true;
+            this.btnAppAdd.Click += new System.EventHandler(this.btnAppAdd_Click);
             // 
             // btnAppPathChoose
             // 
@@ -133,6 +151,7 @@
             this.btnAppPathChoose.TabIndex = 13;
             this.btnAppPathChoose.Text = "Chọn";
             this.btnAppPathChoose.UseVisualStyleBackColor = true;
+            this.btnAppPathChoose.Click += new System.EventHandler(this.btnAppPathChoose_Click);
             // 
             // label2
             // 
@@ -168,37 +187,52 @@
             // 
             // dgvApp
             // 
+            this.dgvApp.AllowUserToAddRows = false;
+            this.dgvApp.AllowUserToDeleteRows = false;
             this.dgvApp.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvApp.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3});
+            this.orderApp,
+            this.codeApp,
+            this.nameApp,
+            this.pathApp});
             this.dgvApp.Location = new System.Drawing.Point(6, 171);
             this.dgvApp.Name = "dgvApp";
+            this.dgvApp.ReadOnly = true;
+            this.dgvApp.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvApp.Size = new System.Drawing.Size(714, 359);
             this.dgvApp.TabIndex = 5;
             // 
-            // dataGridViewTextBoxColumn1
+            // orderApp
             // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "STT";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.orderApp.HeaderText = "STT";
+            this.orderApp.Name = "orderApp";
+            this.orderApp.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn2
+            // codeApp
             // 
-            this.dataGridViewTextBoxColumn2.FillWeight = 300F;
-            this.dataGridViewTextBoxColumn2.HeaderText = "Tên ứng dụng";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Width = 200;
+            this.codeApp.HeaderText = "Mã ứng dụng";
+            this.codeApp.Name = "codeApp";
+            this.codeApp.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn3
+            // nameApp
             // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Đường dẫn";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Width = 356;
+            this.nameApp.FillWeight = 300F;
+            this.nameApp.HeaderText = "Tên ứng dụng";
+            this.nameApp.Name = "nameApp";
+            this.nameApp.ReadOnly = true;
+            this.nameApp.Width = 200;
+            // 
+            // pathApp
+            // 
+            this.pathApp.HeaderText = "Đường dẫn";
+            this.pathApp.Name = "pathApp";
+            this.pathApp.ReadOnly = true;
+            this.pathApp.Width = 356;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.btnGroupReset);
+            this.groupBox2.Controls.Add(this.btnGroupCancel);
+            this.groupBox2.Controls.Add(this.btnGroupOk);
             this.groupBox2.Controls.Add(this.btnGroupEdit);
             this.groupBox2.Controls.Add(this.btnGroupDelete);
             this.groupBox2.Controls.Add(this.btnGroupAdd);
@@ -212,14 +246,25 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Nhóm";
             // 
-            // btnGroupReset
+            // btnGroupCancel
             // 
-            this.btnGroupReset.Location = new System.Drawing.Point(335, 102);
-            this.btnGroupReset.Name = "btnGroupReset";
-            this.btnGroupReset.Size = new System.Drawing.Size(80, 30);
-            this.btnGroupReset.TabIndex = 11;
-            this.btnGroupReset.Text = "Reset";
-            this.btnGroupReset.UseVisualStyleBackColor = true;
+            this.btnGroupCancel.Location = new System.Drawing.Point(421, 102);
+            this.btnGroupCancel.Name = "btnGroupCancel";
+            this.btnGroupCancel.Size = new System.Drawing.Size(80, 30);
+            this.btnGroupCancel.TabIndex = 11;
+            this.btnGroupCancel.Text = "Hủy";
+            this.btnGroupCancel.UseVisualStyleBackColor = true;
+            this.btnGroupCancel.Click += new System.EventHandler(this.btnGroupCancel_Click);
+            // 
+            // btnGroupOk
+            // 
+            this.btnGroupOk.Location = new System.Drawing.Point(335, 102);
+            this.btnGroupOk.Name = "btnGroupOk";
+            this.btnGroupOk.Size = new System.Drawing.Size(80, 30);
+            this.btnGroupOk.TabIndex = 11;
+            this.btnGroupOk.Text = "Ok";
+            this.btnGroupOk.UseVisualStyleBackColor = true;
+            this.btnGroupOk.Click += new System.EventHandler(this.btnGroupOk_Click);
             // 
             // btnGroupEdit
             // 
@@ -229,6 +274,7 @@
             this.btnGroupEdit.TabIndex = 8;
             this.btnGroupEdit.Text = "Sửa";
             this.btnGroupEdit.UseVisualStyleBackColor = true;
+            this.btnGroupEdit.Click += new System.EventHandler(this.btnGroupEdit_Click);
             // 
             // btnGroupDelete
             // 
@@ -238,6 +284,7 @@
             this.btnGroupDelete.TabIndex = 9;
             this.btnGroupDelete.Text = "Xóa";
             this.btnGroupDelete.UseVisualStyleBackColor = true;
+            this.btnGroupDelete.Click += new System.EventHandler(this.btnGroupDelete_Click);
             // 
             // btnGroupAdd
             // 
@@ -262,40 +309,65 @@
             // 
             this.txtGroupName.Location = new System.Drawing.Point(99, 42);
             this.txtGroupName.Name = "txtGroupName";
-            this.txtGroupName.Size = new System.Drawing.Size(304, 26);
+            this.txtGroupName.Size = new System.Drawing.Size(402, 26);
             this.txtGroupName.TabIndex = 6;
             // 
             // dgvGroup
             // 
+            this.dgvGroup.AllowUserToAddRows = false;
+            this.dgvGroup.AllowUserToDeleteRows = false;
             this.dgvGroup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvGroup.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.order,
+            this.code,
             this.name});
             this.dgvGroup.Location = new System.Drawing.Point(6, 149);
             this.dgvGroup.Name = "dgvGroup";
+            this.dgvGroup.ReadOnly = true;
+            this.dgvGroup.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvGroup.Size = new System.Drawing.Size(561, 381);
             this.dgvGroup.TabIndex = 5;
+            this.dgvGroup.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGroup_CellClick);
             // 
             // order
             // 
             this.order.HeaderText = "STT";
             this.order.Name = "order";
+            this.order.ReadOnly = true;
+            // 
+            // code
+            // 
+            this.code.HeaderText = "Mã nhóm";
+            this.code.Name = "code";
+            this.code.ReadOnly = true;
             // 
             // name
             // 
             this.name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.name.HeaderText = "Tên nhóm";
             this.name.Name = "name";
+            this.name.ReadOnly = true;
             // 
-            // Form1
+            // btnTest
+            // 
+            this.btnTest.Location = new System.Drawing.Point(843, 112);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(125, 39);
+            this.btnTest.TabIndex = 7;
+            this.btnTest.Text = "Test thử";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // frmMain
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1337, 731);
+            this.Controls.Add(this.btnTest);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label3);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.Name = "Form1";
+            this.Name = "frmMain";
             this.Text = "Smart Jump List";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -313,29 +385,33 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button btnAppReset;
+        private System.Windows.Forms.Button btnAppOk;
         private System.Windows.Forms.Button btnAppEdit;
-        private System.Windows.Forms.Button btnAppRemove;
+        private System.Windows.Forms.Button btnAppDelete;
         private System.Windows.Forms.Button btnAppAdd;
-        private System.Windows.Forms.Button btnAppPathChoose;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtAppPath;
         private System.Windows.Forms.TextBox txtAppName;
         private System.Windows.Forms.DataGridView dgvApp;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.Button btnGroupReset;
+        private System.Windows.Forms.Button btnGroupOk;
         private System.Windows.Forms.Button btnGroupEdit;
         private System.Windows.Forms.Button btnGroupDelete;
         private System.Windows.Forms.Button btnGroupAdd;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtGroupName;
         private System.Windows.Forms.DataGridView dgvGroup;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orderApp;
+        private System.Windows.Forms.DataGridViewTextBoxColumn codeApp;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameApp;
+        private System.Windows.Forms.DataGridViewTextBoxColumn pathApp;
         private System.Windows.Forms.DataGridViewTextBoxColumn order;
+        private System.Windows.Forms.DataGridViewTextBoxColumn code;
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button btnAppPathChoose;
+        private System.Windows.Forms.Button btnGroupCancel;
+        private System.Windows.Forms.Button btnAppCancel;
+        private System.Windows.Forms.Button btnTest;
     }
 }
 
